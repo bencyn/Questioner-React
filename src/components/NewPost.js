@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import PostList from "../containers/PostList";
+import Post from "./Post";
 
 class NewPost extends Component {
   constructor() {
     super();
-    this.state = { title: "", body: "" };
+    this.state = { title: "", body: "", userId: 1, id: "" };
 
     this.handleInputChange = e => {
       this.setState({
@@ -15,6 +17,8 @@ class NewPost extends Component {
       e.preventDefault();
       if (this.state.title.trim() && this.state.body.trim()) {
         console.log(this.state);
+        console.log(this.props);
+        this.props.onAddPost(this.state);
         this.handleReset();
       }
     };
@@ -69,7 +73,9 @@ class NewPost extends Component {
                 </div>
               </form>
             </div>
-            <div className="col-md-6">Display Post</div>
+            <div className="col-md-6">
+              <PostList />
+            </div>
           </div>
         </div>
       </div>

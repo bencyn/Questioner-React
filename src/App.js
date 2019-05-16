@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import NewPost from "./components/NewPost";
+// import NewPost from "./components/NewPost";
+// import CreatePost from "./containers/CreatePost";
+import Meetups from "./components/Meetups";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Meetups from "./components/Meetups";
 
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 class App extends Component {
-  // state = {};
   render() {
     return (
       <BrowserRouter>
@@ -18,21 +17,17 @@ class App extends Component {
           <div className="main">
             <nav />
             <article>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/post" component={NewPost} />
-              <Meetups />
+              {/* <Meetups /> */}
+              <Switch>
+                <Route exact path="/" component={Meetups} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                {/* <Route exact path="/post" component={CreatePost} /> */}
+              </Switch>
             </article>
             <aside />
           </div>
           <div className="clearfix" />
-
-          <Switch>
-            {/* <Route exact path="/" component={Home} /> */}
-            {/* <Route path="/about" component={About} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/:post_id" component={Post} /> */}
-          </Switch>
         </div>
       </BrowserRouter>
     );
