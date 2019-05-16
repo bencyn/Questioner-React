@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../actions";
+import Swal from "sweetalert2";
 class Login extends Component {
-  // state = {  }
-
   constructor() {
     super();
-    this.state = { username: "", password: "" };
+    this.state = { username: "", password: "", authenticated: false };
 
     this.handleInputChange = e => {
       this.setState({
@@ -17,7 +16,7 @@ class Login extends Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
-      console.log(this.props);
+
       this.props.login(this.state, this.props.history);
       this.handleReset();
     };
@@ -27,6 +26,18 @@ class Login extends Component {
         username: "",
         password: ""
       });
+    };
+
+    this.componentDidMount = () => {
+      var notification = document.getElementById("notification");
+      var message = sessionStorage.getItem("success");
+      if (message) {
+        Swal.fire("", message, "success");
+        notification.style.display = "block";
+        notification.setAttribute("class", "alert alert-success");
+        notification.innerHTML = `${message}`;
+        sessionStorage.clear();
+      }
     };
   }
 
