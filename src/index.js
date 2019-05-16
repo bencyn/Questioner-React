@@ -6,11 +6,11 @@ import thunk from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers";
-import { fetchAllPosts } from "./actions/index";
+import { fetchAllMeetups } from "./actions/index";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-store.dispatch(fetchAllPosts());
+store.dispatch(fetchAllMeetups());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -17,9 +17,6 @@ const Navbar = props => {
           <NavLink to="/login" className="nav-link">
             Login
           </NavLink>
-          <NavLink to="/post" className="nav-link">
-            Post
-          </NavLink>
         </div>
       </header>
     </div>
