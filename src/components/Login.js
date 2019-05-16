@@ -1,14 +1,42 @@
 import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { login } from "../actions";
 class Login extends Component {
   // state = {  }
+
+  constructor() {
+    super();
+    this.state = { username: "", password: "" };
+
+    this.handleInputChange = e => {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    };
+
+    this.handleSubmit = e => {
+      e.preventDefault();
+      console.log(this.props);
+      this.props.login(this.state, this.props.history);
+      this.handleReset();
+    };
+
+    this.handleReset = () => {
+      this.setState({
+        username: "",
+        password: ""
+      });
+    };
+  }
+
   render() {
+    const { username, password } = this.state;
     return (
       <div className="sub-container">
         <div className="login">
-          <form id="login-form">
-            <label htmlFor="username">Login</label>
+          <form id="login-form" onSubmit={this.handleSubmit}>
+            <label>Login</label>
             <div
               id="notification"
               className="alert alert-danger"
@@ -20,6 +48,8 @@ class Login extends Component {
               placeholder="Enter Username"
               id="username"
               name="username"
+              value={username}
+              onChange={this.handleInputChange}
               required
             />
 
@@ -29,6 +59,8 @@ class Login extends Component {
               placeholder="Enter Password"
               id="password"
               name="password"
+              value={password}
+              onChange={this.handleInputChange}
               required
             />
             <button
@@ -49,4 +81,9 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default withRouter(
+  connect(
+    null,
+    { login }
+  )(Login)
+);

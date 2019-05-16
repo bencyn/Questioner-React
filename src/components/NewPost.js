@@ -32,6 +32,7 @@ class NewPost extends Component {
   }
 
   render() {
+    const { email, password } = this.state;
     return (
       <div>
         <div className="container">

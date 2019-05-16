@@ -1,8 +1,13 @@
-import { ADD_POST, DELETE_POST, FETCH_POST, FETCH_MEETUP } from "./types";
+import {
+  ADD_POST,
+  DELETE_POST,
+  FETCH_POST,
+  FETCH_MEETUP,
+  LOGIN
+} from "./types";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-// const apiUrl = "http://localhost:4000/posts";
-// const apiUrl = "https://jsonplaceholder.typicode.com/posts";
 const apiUrl = "https://bencyn-questioner.herokuapp.com/api/v2";
 
 export const createPost = ({ title, body }) => {
@@ -18,6 +23,26 @@ export const createPost = ({ title, body }) => {
   };
 };
 
+export const login = ({ username, password }, history) => {
+  const data = {
+    username: username,
+    password: password
+  };
+  return dispatch => {
+    return axios
+      .post(apiUrl + "/auth/login", data)
+      .then(response => {
+        dispatch(loginSuccess(response.data));
+        Swal.fire("", "Logged In successfully", "success");
+        history.push("/");
+      })
+      .catch(error => {
+        console.log(error.response);
+        Swal.fire("Oops...", error.response.data.error, "error");
+      });
+  };
+};
+
 export const createPostSuccess = data => {
   return {
     type: ADD_POST,
@@ -26,6 +51,16 @@ export const createPostSuccess = data => {
       title: data.title,
       body: data.body,
       userId: data.userId
+    }
+  };
+};
+
+export const loginSuccess = data => {
+  return {
+    type: LOGIN,
+    payload: {
+      username: data.username,
+      password: data.password
     }
   };
 };
@@ -62,19 +97,6 @@ export const fetchMeetups = meetups => {
   return {
     type: FETCH_MEETUP,
     meetups
-  };
-};
-
-export const fetchAllPosts = () => {
-  return dispatch => {
-    return axios
-      .get(apiUrl)
-      .then(response => {
-        dispatch(fetchPosts(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
   };
 };
 
