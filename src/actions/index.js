@@ -3,7 +3,8 @@ import {
   DELETE_POST,
   FETCH_POST,
   FETCH_MEETUP,
-  LOGIN
+  LOGIN,
+  REGISTER
 } from "./types";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -23,23 +24,59 @@ export const createPost = ({ title, body }) => {
   };
 };
 
-export const login = ({ username, password }, history) => {
-  const data = {
-    username: username,
-    password: password
-  };
+export const login = (data, history) => {
   return dispatch => {
     return axios
-      .post(apiUrl + "/auth/login", data)
+      .post(apiUrl + "/auth/login", { ...data })
       .then(response => {
         dispatch(loginSuccess(response.data));
-        Swal.fire("", "Logged In successfully", "success");
+        localStorage.setItem("authenticated", true);
+        Swal.fire("", response.data.message, "success");
         history.push("/");
       })
       .catch(error => {
-        console.log(error.response);
         Swal.fire("Oops...", error.response.data.error, "error");
       });
+  };
+};
+
+export const register = (data, history) => {
+  var notification = document.getElementById("notification");
+  var submit = document.getElementById("submit");
+  return dispatch => {
+    return axios
+      .post(apiUrl + "/auth/signup", { ...data })
+      .then(response => {
+        dispatch(registerSuccess(response.data));
+        sessionStorage.setItem(
+          "success",
+          "!! you have successfully created an account, login to continue !!"
+        );
+        history.push("/login");
+      })
+      .catch(error => {
+        notification.style.display = "block";
+        notification.innerHTML = `${error.response.data.error}`;
+        submit.innerHTML = "Register";
+        submit.removeAttribute("disabled", "disabled");
+        Swal.fire("Oops...", error.response.data.error, "error");
+      });
+  };
+};
+
+export const registerSuccess = data => {
+  return {
+    type: REGISTER,
+    payload: {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      othername: data.othername,
+      phone_number: data.phone_number,
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      confirm_password: data.confirm_password
+    }
   };
 };
 
@@ -60,7 +97,8 @@ export const loginSuccess = data => {
     type: LOGIN,
     payload: {
       username: data.username,
-      password: data.password
+      password: data.password,
+      authenticated: true
     }
   };
 };

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { register } from "../actions";
 class Register extends Component {
   constructor() {
     super();
@@ -23,8 +24,9 @@ class Register extends Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
-
-      // this.props.login(this.state, this.props.history);
+      console.log(this.state);
+      console.log(this.props);
+      this.props.register(this.state, this.props.history);
       this.handleReset();
     };
 
@@ -36,10 +38,20 @@ class Register extends Component {
     };
   }
   render() {
+    const {
+      firstname,
+      lastname,
+      othername,
+      phone_number,
+      username,
+      email,
+      password,
+      confirm_password
+    } = this.state;
     return (
       <div className="sub-container">
         <div className="register">
-          <htmlForm id="register-htmlForm">
+          <form id="register-form" onSubmit={this.handleSubmit}>
             <label htmlFor="username">
               <strong>Create an account</strong>
             </label>
@@ -52,73 +64,89 @@ class Register extends Component {
             <label htmlFor="username">Firstname</label>
             <input
               type="text"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Firstname"
               id="firstname"
               name="firstname"
+              value={firstname}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Lastname</label>
             <input
               type="text"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Lastname"
               id="lastname"
               name="lastname"
+              value={lastname}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Othername</label>
             <input
               type="text"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Othername"
               id="othername"
               name="othername"
+              value={othername}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Username</label>
             <input
               type="text"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Username"
               id="username"
               name="username"
+              value={username}
+              onChange={this.handleInputChange}
               required
             />
-            <label htmlFor="username">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Email"
               id="email"
               name="email"
+              value={email}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Phone Number</label>
             <input
               type="tel"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Phone Number"
               id="phone_number"
               name="phone_number"
+              value={phone_number}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Password</label>
             <input
               type="password"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Password"
               id="password"
               name="password"
+              value={password}
+              onChange={this.handleInputChange}
               required
             />
             <label htmlFor="username">Confirm Password</label>
             <input
               type="password"
-              className="htmlForm-control"
+              className="form-control"
               placeholder="Enter Confirm Password"
               id="confirm_password"
               name="confirm_password"
+              value={confirm_password}
+              onChange={this.handleInputChange}
               required
             />
             <button
@@ -128,7 +156,7 @@ class Register extends Component {
             >
               Register
             </button>
-          </htmlForm>
+          </form>
         </div>
         <p>
           Already have an account?
@@ -139,4 +167,9 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default withRouter(
+  connect(
+    null,
+    { register }
+  )(Register)
+);
