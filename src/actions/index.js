@@ -11,19 +11,6 @@ import Swal from "sweetalert2";
 
 const apiUrl = "https://bencyn-questioner.herokuapp.com/api/v2";
 
-export const createPost = ({ title, body }) => {
-  return dispatch => {
-    return axios
-      .post(`${apiUrl}`, { title, body })
-      .then(response => {
-        dispatch(createPostSuccess(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-};
-
 export const login = (data, history) => {
   return dispatch => {
     return axios
@@ -80,18 +67,6 @@ export const registerSuccess = data => {
   };
 };
 
-export const createPostSuccess = data => {
-  return {
-    type: ADD_POST,
-    payload: {
-      id: data.id,
-      title: data.title,
-      body: data.body,
-      userId: data.userId
-    }
-  };
-};
-
 export const loginSuccess = data => {
   return {
     type: LOGIN,
@@ -124,17 +99,11 @@ export const deletePost = id => {
       });
   };
 };
-export const fetchPosts = posts => {
-  return {
-    type: FETCH_POST,
-    posts
-  };
-};
 
 export const fetchMeetups = meetups => {
   return {
     type: FETCH_MEETUP,
-    meetups
+    meetups: meetups.data.meetup
   };
 };
 
@@ -143,8 +112,10 @@ export const fetchAllMeetups = () => {
     return axios
       .get(`${apiUrl}/meetups/upcoming/`)
       .then(response => {
-        console.log(response.data.meetup);
-        dispatch(fetchMeetups(response.data.meetup));
+        dispatch({
+          type: FETCH_MEETUP,
+          meetups: response.data.meetup
+        });
       })
       .catch(error => {
         throw error;

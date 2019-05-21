@@ -4,11 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "dev": "webpack-dev-server --mode development --open --hot",
     "start": "serve -s dist ",
     "heroku-postbuild": "npm run build",
     "build": "webpack --mode production"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./src/setupTests.js"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -23,11 +32,13 @@
     "@storybook/react": "^5.0.11",
     "@storybook/storybook-deployer": "^2.8.1",
     "babel-eslint": "9.x",
+    "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.5",
     "coveralls": "^3.0.3",
     "css-loader": "^2.1.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.0",
+    "enzyme-to-json": "^3.3.5",
     "eslint": "5.x",
     "eslint-config-react-app": "^4.0.1",
     "eslint-plugin-flowtype": "2.x",
@@ -51,12 +62,16 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "fetch-mock": "^7.3.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.3",
+    "redux-promise-middleware": "^6.1.0",
     "redux-thunk": "^2.3.0",
     "serve": "^11.0.0",
     "sweetalert2": "^8.11.0"
