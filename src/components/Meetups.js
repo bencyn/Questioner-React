@@ -48,7 +48,7 @@ const Meetups = ({ meetups }) => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.meetups);
+  console.log(state);
   return {
     meetups: state.meetups
   };

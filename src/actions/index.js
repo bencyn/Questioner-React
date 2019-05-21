@@ -16,13 +16,14 @@ export const login = (data, history) => {
     return axios
       .post(apiUrl + "/auth/login", { ...data })
       .then(response => {
-        dispatch(loginSuccess(response.data));
+        console.log(response);
+        dispatch(loginSuccess(response));
         localStorage.setItem("authenticated", true);
         Swal.fire("", response.data.message, "success");
         history.push("/");
       })
       .catch(error => {
-        Swal.fire("Oops...", error.response.data.error, "error");
+        console.log(error);
       });
   };
 };
@@ -35,6 +36,7 @@ export const register = (data, history) => {
       .post(apiUrl + "/auth/signup", { ...data })
       .then(response => {
         dispatch(registerSuccess(response.data));
+
         sessionStorage.setItem(
           "success",
           "!! you have successfully created an account, login to continue !!"
@@ -71,8 +73,7 @@ export const loginSuccess = data => {
   return {
     type: LOGIN,
     payload: {
-      username: data.username,
-      password: data.password,
+      token: data.data.data[0].token,
       authenticated: true
     }
   };

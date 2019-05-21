@@ -7,6 +7,7 @@ import expect from "expect";
 import * as types from "../types";
 
 const mockStore = configureMockStore([thunk]);
+
 const meetup = [
   {
     body:

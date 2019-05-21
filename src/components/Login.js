@@ -17,6 +17,7 @@ class Login extends Component {
     this.handleSubmit = e => {
       e.preventDefault();
 
+      console.log(this.state);
       this.props.login(this.state, this.props.history);
       this.handleReset();
     };
