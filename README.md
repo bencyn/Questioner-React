@@ -4,7 +4,7 @@ Questioner is a platform that allows users to crowdsource questions for a meetup
 
 ## Badges
 
-[![Coverage Status](https://coveralls.io/repos/github/bencyn/Questioner-React/badge.svg?branch=develop)](https://coveralls.io/github/bencyn/Questioner-React?branch=develop)
+[![Build Status](https://travis-ci.org/bencyn/Questioner-React.svg?branch=develop)](https://travis-ci.org/bencyn/Questioner-React) [![Coverage Status](https://coveralls.io/repos/github/bencyn/Questioner-React/badge.svg?branch=develop)](https://coveralls.io/github/bencyn/Questioner-React?branch=develop)
 
 ## Overview
 
