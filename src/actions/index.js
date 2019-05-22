@@ -11,31 +11,19 @@ import Swal from "sweetalert2";
 
 const apiUrl = "https://bencyn-questioner.herokuapp.com/api/v2";
 
-export const createPost = ({ title, body }) => {
-  return dispatch => {
-    return axios
-      .post(`${apiUrl}`, { title, body })
-      .then(response => {
-        dispatch(createPostSuccess(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-};
-
 export const login = (data, history) => {
   return dispatch => {
     return axios
       .post(apiUrl + "/auth/login", { ...data })
       .then(response => {
-        dispatch(loginSuccess(response.data));
+        console.log(response);
+        dispatch(loginSuccess(response));
         localStorage.setItem("authenticated", true);
         Swal.fire("", response.data.message, "success");
         history.push("/");
       })
       .catch(error => {
-        Swal.fire("Oops...", error.response.data.error, "error");
+        console.log(error);
       });
   };
 };
@@ -48,6 +36,7 @@ export const register = (data, history) => {
       .post(apiUrl + "/auth/signup", { ...data })
       .then(response => {
         dispatch(registerSuccess(response.data));
+
         sessionStorage.setItem(
           "success",
           "!! you have successfully created an account, login to continue !!"
@@ -80,24 +69,11 @@ export const registerSuccess = data => {
   };
 };
 
-export const createPostSuccess = data => {
-  return {
-    type: ADD_POST,
-    payload: {
-      id: data.id,
-      title: data.title,
-      body: data.body,
-      userId: data.userId
-    }
-  };
-};
-
 export const loginSuccess = data => {
   return {
     type: LOGIN,
     payload: {
-      username: data.username,
-      password: data.password,
+      token: data.data.data[0].token,
       authenticated: true
     }
   };
@@ -124,17 +100,11 @@ export const deletePost = id => {
       });
   };
 };
-export const fetchPosts = posts => {
-  return {
-    type: FETCH_POST,
-    posts
-  };
-};
 
 export const fetchMeetups = meetups => {
   return {
     type: FETCH_MEETUP,
-    meetups
+    meetups: meetups.data.meetup
   };
 };
 
@@ -143,8 +113,7 @@ export const fetchAllMeetups = () => {
     return axios
       .get(`${apiUrl}/meetups/upcoming/`)
       .then(response => {
-        console.log(response.data.meetup);
-        dispatch(fetchMeetups(response.data.meetup));
+        dispatch(fetchMeetups(response));
       })
       .catch(error => {
         throw error;

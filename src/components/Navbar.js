@@ -3,8 +3,9 @@ import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Navbar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.handleLogout = e => {
       e.preventDefault();
       var result = confirm("Are sure you want to logout?");

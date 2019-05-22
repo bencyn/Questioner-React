@@ -7,7 +7,6 @@ const Meetups = ({ meetups }) => {
   const meetupList = meetups.map(meetup => {
     var image;
     count++;
-    // console.log(meetup.id);
     if (count % 2 == 0) {
       image = "https://s3.envato.com/files/188307997/1.jpg";
     } else {
@@ -49,7 +48,7 @@ const Meetups = ({ meetups }) => {
 };
 
 const mapStateToProps = state => {
-  // console.log(state);
+  console.log(state);
   return {
     meetups: state.meetups
   };
