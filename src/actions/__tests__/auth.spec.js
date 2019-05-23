@@ -50,28 +50,28 @@ describe("Atuthentication actions", () => {
       expect(state.user).toEqual(data);
       expect(store.getActions()).toEqual(expectedActions);
       expect(history.push).toBeCalled();
-      // expect(history.push).toBeCalledWith("/");
+      expect(history.push).toBeCalledWith("/");
     });
   });
 
-  // it("dispatches REGISTER action and return data on success", () => {
-  //   let history = {
-  //     push: jest.fn()
-  //   };
-  //   axios.post.mockResolvedValue({
-  //     data: {
-  //       data: [{ token: data.token }]
-  //     }
-  //   });
+  it("dispatches REGISTER action and return data on success", () => {
+    let history = {
+      push: jest.fn()
+    };
+    axios.post.mockResolvedValue({
+      data: {
+        data: [{ token: data.token }]
+      }
+    });
 
-  //   const expectedActions = [{ type: types.LOGIN, payload: data }];
+    const expectedActions = [{ type: types.LOGIN, payload: data }];
 
-  //   return store.dispatch(login(loginData, history)).then(() => {
-  //     const state = store.getState();
-  //     expect(state.user).toEqual(data);
-  //     expect(store.getActions()).toEqual(expectedActions);
-  //     expect(history.push).toBeCalled();
-  //     expect(history.push).toBeCalledWith("/");
-  //   });
-  // });
+    return store.dispatch(login(loginData, history)).then(() => {
+      const state = store.getState();
+      expect(state.user).toEqual(data);
+      expect(store.getActions()).toEqual(expectedActions);
+      expect(history.push).toBeCalled();
+      expect(history.push).toBeCalledWith("/");
+    });
+  });
 });

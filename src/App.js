@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Meetups from "./components/Meetups";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import { hot } from "react-hot-loader";
 
 class App extends Component {
   render() {
@@ -30,4 +31,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App);

@@ -36,7 +36,7 @@ export const register = (data, history) => {
       .post(apiUrl + "/auth/signup", { ...data })
       .then(response => {
         dispatch(registerSuccess(response.data));
-
+        console.log(response.data);
         sessionStorage.setItem(
           "success",
           "!! you have successfully created an account, login to continue !!"
