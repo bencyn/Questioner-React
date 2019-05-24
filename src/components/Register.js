@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../actions";
-class Register extends Component {
+
+export class Register extends Component {
   constructor() {
     super();
     this.state = {
@@ -24,8 +25,7 @@ class Register extends Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
-      console.log(this.state);
-      console.log(this.props);
+
       this.props.register(this.state, this.props.history);
       this.handleReset();
     };
@@ -51,7 +51,11 @@ class Register extends Component {
     return (
       <div className="sub-container">
         <div className="register">
-          <form id="register-form" onSubmit={this.handleSubmit}>
+          <form
+            id="register-form"
+            data-test="register-form"
+            onSubmit={this.handleSubmit}
+          >
             <label htmlFor="username">
               <strong>Create an account</strong>
             </label>

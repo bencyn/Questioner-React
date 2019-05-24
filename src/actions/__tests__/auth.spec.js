@@ -5,6 +5,7 @@ import fetchMock from "fetch-mock";
 import { login, register } from "../index";
 import expect from "expect";
 import * as types from "../types";
+import rootReducer from "../../reducers";
 
 const mockStore = configureMockStore([thunk]);
 
@@ -34,27 +35,6 @@ describe("Atuthentication actions", () => {
   });
 
   it("dispatches LOGIN action and return data on success", () => {
-    let history = {
-      push: jest.fn()
-    };
-    axios.post.mockResolvedValue({
-      data: {
-        data: [{ token: data.token }]
-      }
-    });
-
-    const expectedActions = [{ type: types.LOGIN, payload: data }];
-
-    return store.dispatch(login(loginData, history)).then(() => {
-      const state = store.getState();
-      expect(state.user).toEqual(data);
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(history.push).toBeCalled();
-      expect(history.push).toBeCalledWith("/");
-    });
-  });
-
-  it("dispatches REGISTER action and return data on success", () => {
     let history = {
       push: jest.fn()
     };

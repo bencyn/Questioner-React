@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-class Navbar extends Component {
+export class Navbar extends Component {
   constructor(props) {
     super(props);
 
@@ -18,6 +18,7 @@ class Navbar extends Component {
 
   render() {
     const authenticated = localStorage.getItem("authenticated");
+    console.log(authenticated);
     return (
       <div>
         <header>
@@ -30,7 +31,7 @@ class Navbar extends Component {
             <NavLink to="/">Home</NavLink>
             {authenticated ? (
               <div>
-                <NavLink to="/profile" className="nav-link">
+                <NavLink to="/profile" data-test="profile" className="nav-link">
                   Profile
                 </NavLink>
                 <a className="nav-link" onClick={this.handleLogout}>
@@ -38,7 +39,7 @@ class Navbar extends Component {
                 </a>
               </div>
             ) : (
-              <NavLink to="/login" className="nav-link">
+              <NavLink to="/login" data-test="login" className="nav-link">
                 Login
               </NavLink>
             )}

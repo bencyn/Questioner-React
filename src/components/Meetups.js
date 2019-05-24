@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-const Meetups = ({ meetups }) => {
+export const Meetups = ({ meetups }) => {
   var count = 0;
   const meetupList = meetups.map(meetup => {
     var image;
@@ -14,7 +14,7 @@ const Meetups = ({ meetups }) => {
         "https://cdn.dribbble.com/users/1807056/screenshots/4666838/dribbble_404.png";
     }
     return meetup ? (
-      <div className="meetup-item" key={meetup.id}>
+      <div data-test="meetups" className="meetup-item" key={meetup.id}>
         <a className="meetup-link" href="#" data-image={image}>
           <div className="m-img">
             <img src={image} />
@@ -32,7 +32,7 @@ const Meetups = ({ meetups }) => {
         </a>
       </div>
     ) : (
-      <div>No upcoming meetup available</div>
+      <div data-test="no-meetups">No upcoming meetup available</div>
     );
   });
   return (
@@ -54,4 +54,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Meetups));
+export default connect(mapStateToProps)(Meetups);

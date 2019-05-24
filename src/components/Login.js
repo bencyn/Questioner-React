@@ -3,7 +3,8 @@ import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../actions";
 import Swal from "sweetalert2";
-class Login extends Component {
+
+export class Login extends Component {
   constructor() {
     super();
     this.state = { username: "", password: "", authenticated: false };
@@ -17,7 +18,6 @@ class Login extends Component {
     this.handleSubmit = e => {
       e.preventDefault();
 
-      console.log(this.state);
       this.props.login(this.state, this.props.history);
       this.handleReset();
     };
@@ -29,17 +29,17 @@ class Login extends Component {
       });
     };
 
-    this.componentDidMount = () => {
-      var notification = document.getElementById("notification");
-      var message = sessionStorage.getItem("success");
-      if (message) {
-        Swal.fire("", message, "success");
-        notification.style.display = "block";
-        notification.setAttribute("class", "alert alert-success");
-        notification.innerHTML = `${message}`;
-        sessionStorage.clear();
-      }
-    };
+    // this.componentDidMount = () => {
+    //   var notification = document.getElementById("notification");
+    //   var message = sessionStorage.getItem("success");
+    //   if (message) {
+    //     Swal.fire("", message, "success");
+    //     notification.style.display = "block";
+    //     notification.setAttribute("class", "alert alert-success");
+    //     notification.innerHTML = `${message}`;
+    //     sessionStorage.clear();
+    //   }
+    // };
   }
 
   render() {
