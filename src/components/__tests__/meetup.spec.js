@@ -3,6 +3,7 @@ import { shallow, mount } from "enzyme";
 import ConnectedMeetupsList, { Meetups } from "../Meetups";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
+import { Link, StaticRouter } from "react-router-dom";
 
 const mockStore = configureMockStore([thunk]);
 
@@ -45,15 +46,18 @@ describe("Unconnected Meetups List", () => {
 
     expect(wrapper.find("[data-test='meetups']").length).toBe(2);
   });
-
-  describe("<ConnectedMeetupsList />", () => {
-    test("should render meetups from store ", () => {
-      const store = mockStore({
-        meetups: meetup
-      });
-
-      const wrapper = mount(<ConnectedMeetupsList {...{ store }} />);
-      expect(wrapper.find("[data-test='meetups']").length).toBe(2);
+});
+describe("<ConnectedMeetupsList />", () => {
+  test("should render meetups from store ", () => {
+    const store = mockStore({
+      meetups: meetup
     });
+
+    const wrapper = mount(
+      <StaticRouter>
+        <ConnectedMeetupsList {...{ store }} />
+      </StaticRouter>
+    );
+    expect(wrapper.find("[data-test='meetups']").length).toBe(2);
   });
 });

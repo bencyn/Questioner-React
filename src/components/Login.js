@@ -28,18 +28,6 @@ export class Login extends Component {
         password: ""
       });
     };
-
-    // this.componentDidMount = () => {
-    //   var notification = document.getElementById("notification");
-    //   var message = sessionStorage.getItem("success");
-    //   if (message) {
-    //     Swal.fire("", message, "success");
-    //     notification.style.display = "block";
-    //     notification.setAttribute("class", "alert alert-success");
-    //     notification.innerHTML = `${message}`;
-    //     sessionStorage.clear();
-    //   }
-    // };
   }
 
   render() {

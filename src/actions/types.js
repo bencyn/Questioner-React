@@ -8,6 +8,7 @@ export const FETCH_POST = "FETCH_POST";
 export const ADD_MEETUP = "ADD_MEETUP";
 export const DELETE_MEETUP = "DELETE_MEETUP";
 export const FETCH_MEETUP = "FETCH_MEETUP";
+export const VIEW_MEETUP = "VIEW_MEETUP";
 
 export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";

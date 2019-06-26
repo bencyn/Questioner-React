@@ -18,6 +18,10 @@ describe("Atuthentication actions", () => {
     authenticated: true,
     token: "eyJ0eXAiOiJKV"
   };
+  const data2 = {
+    authenticated: true,
+    token: ""
+  };
 
   const loginData = {
     username: "bencyn",
@@ -26,7 +30,8 @@ describe("Atuthentication actions", () => {
   };
   beforeEach(() => {
     store = mockStore({
-      user: data
+      user: data,
+      user2: data
     });
   });
 
@@ -48,10 +53,29 @@ describe("Atuthentication actions", () => {
 
     return store.dispatch(login(loginData, history)).then(() => {
       const state = store.getState();
+
       expect(state.user).toEqual(data);
       expect(store.getActions()).toEqual(expectedActions);
       expect(history.push).toBeCalled();
       expect(history.push).toBeCalledWith("/");
+    });
+  });
+  it("dispatches LOGIN action and return data on success", () => {
+    let history = {
+      push: jest.fn()
+    };
+    axios.post.mockResolvedValue({
+      data: {
+        data: [{ token: "" }]
+      }
+    });
+
+    const expectedActions = [{ type: types.LOGIN, payload: data2 }];
+
+    return store.dispatch(login(loginData, history)).then(response => {
+      const state = store.getState();
+      expect(state.user2).not.toBe(data2);
+      expect(store.getActions()).not.toBe(expectedActions);
     });
   });
 });
