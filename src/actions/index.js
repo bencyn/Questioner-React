@@ -4,39 +4,35 @@ import {
   FETCH_POST,
   FETCH_MEETUP,
   LOGIN,
-  REGISTER
+  REGISTER,
+  VIEW_MEETUP
 } from "./types";
-import axios from "axios";
-import Swal from "sweetalert2";
 
+import Swal from "sweetalert2";
+import { dispatch } from "rxjs/internal/observable/pairs";
+import { post, get, destroy } from "../helpers/helper";
 const apiUrl = "https://bencyn-questioner.herokuapp.com/api/v2";
 
-export const login = (data, history) => {
-  return dispatch => {
-    return axios
-      .post(apiUrl + "/auth/login", { ...data })
-      .then(response => {
-        console.log(response);
-        dispatch(loginSuccess(response));
-        localStorage.setItem("authenticated", true);
-        Swal.fire("", response.data.message, "success");
-        history.push("/");
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-};
+//  View Meetups Action Logic
+export const login = (data, history) => dispatch =>
+  post(apiUrl + "/auth/login", { ...data })
+    .then(response => {
+      dispatch(loginSuccess(response));
+      localStorage.setItem("authenticated", true);
+      Swal.fire("", response.data.message, "success");
+      history.push("/");
+    })
+    .catch(error => {
+      Swal.fire("Oops...", error.response.data.error, "error");
+    });
 
 export const register = (data, history) => {
-  var notification = document.getElementById("notification");
-  var submit = document.getElementById("submit");
-  return dispatch => {
-    return axios
-      .post(apiUrl + "/auth/signup", { ...data })
+  let notification = document.getElementById("notification");
+  let submit = document.getElementById("submit");
+  return dispatch =>
+    post(apiUrl + "/auth/signup", { ...data })
       .then(response => {
         dispatch(registerSuccess(response.data));
-        console.log(response.data);
         sessionStorage.setItem(
           "success",
           "!! you have successfully created an account, login to continue !!"
@@ -50,6 +46,22 @@ export const register = (data, history) => {
         submit.removeAttribute("disabled", "disabled");
         Swal.fire("Oops...", error.response.data.error, "error");
       });
+};
+
+export const getMeetup = (id, history) => dispatch =>
+  get(apiUrl + "/meetups/" + id)
+    .then(response => {
+      dispatch(viewMeetup(response));
+      history.push("/meetup");
+    })
+    .catch(error => {
+      throw error;
+    });
+
+export const viewMeetup = meetup => {
+  return {
+    type: VIEW_MEETUP,
+    meetup: meetup.data
   };
 };
 
@@ -88,18 +100,14 @@ export const deletePostSuccess = id => {
   };
 };
 
-export const deletePost = id => {
-  return dispatch => {
-    return axios
-      .delete(`${apiUrl}/${id}`)
-      .then(response => {
-        dispatch(deletePostSuccess(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-};
+export const deletePost = id => dispatch =>
+  destroy(apiUrl + "/" + id)
+    .then(response => {
+      dispatch(deletePostSuccess(response.data));
+    })
+    .catch(error => {
+      throw error;
+    });
 
 export const fetchMeetups = meetups => {
   return {
@@ -108,15 +116,11 @@ export const fetchMeetups = meetups => {
   };
 };
 
-export const fetchAllMeetups = () => {
-  return dispatch => {
-    return axios
-      .get(`${apiUrl}/meetups/upcoming/`)
-      .then(response => {
-        dispatch(fetchMeetups(response));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-};
+export const fetchAllMeetups = () => dispatch =>
+  get(apiUrl + "/meetups/upcoming/")
+    .then(response => {
+      dispatch(fetchMeetups(response));
+    })
+    .catch(error => {
+      throw error;
+    });

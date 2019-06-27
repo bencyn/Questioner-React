@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import meetups from "./meetupReducer";
+import meetups from "./meetupsReducer";
+import meetup from "./meetupReducer";
 import user from "./userReducer";
 
 export default combineReducers({
   meetups: meetups,
-  user: user
+  user: user,
+  meetup: meetup
 });

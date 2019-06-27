@@ -1,9 +1,9 @@
-import { VIEW_MEETUP } from "../actions/types";
+import { FETCH_MEETUP } from "../actions/types";
 
 export default function meetReducer(state = [], action) {
   switch (action.type) {
-    case VIEW_MEETUP:
-      return action.meetup;
+    case FETCH_MEETUP:
+      return action.meetups;
     default:
       return state;
   }
